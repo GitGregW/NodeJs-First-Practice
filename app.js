@@ -26,13 +26,6 @@ const server = http.createServer((req, res) => {
         return res.end();
     }
     else if(url === '/create-user' && method === 'POST'){
-        console.log('Welcome to Create User Page (POST)');
-        res.setHeader('content-type', 'text/html');
-        res.write('<head><title>User Create/title></head>');
-        res.write('<html><body>');
-        res.write('<h1>Welcome to the Created User Page</h1>');
-        res.write('</body></html>');
-
         const body = [];
         req.on('data', chunk => {
             body.push(chunk);
@@ -41,6 +34,8 @@ const server = http.createServer((req, res) => {
             const parsedBody = Buffer.concat(body).toString();
             const user = parsedBody.split('=')[1];
             console.log(user);
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
             return res.end();
         });
     }
